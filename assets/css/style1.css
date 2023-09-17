@@ -1,0 +1,29 @@
+.search_pat {
+    background: none;
+    border-radius: 5px;
+    border: 1px solid white;
+    /* width: 70%; */
+    height: 50px;
+    color: white;
+    padding: 0 20px;
+    background-color: #fff;
+    color: black;
+}
+
+.list{
+    display: flex;
+}
+.search_btn {
+    padding: 0 20px;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid white;
+    /* width: 30%; */
+    height: 50px;
+    transition: 0.5s;
+}
+.search_btn:hover{
+    background: white;
+    color: black;
+}
+
