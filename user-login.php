@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $sql = "SELECT id, password, user_type FROM user WHERE name = ? AND email = ?";
+    $sql = "SELECT id, password, status, user_type FROM user WHERE name = ? AND email = ?";
     $stmt = $database->getMysqli()->prepare($sql);
     $stmt->bind_param("ss", $username, $email);
 
@@ -21,17 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = $result->fetch_assoc();
             $hashedPassword = $row["password"];
             $id = $row["id"];
+            $status = $row["status"];
             $user_type = $row["user_type"];
-            $user_email = $row["email"];
 
-            if (password_verify($password, $hashedPassword)) {
-                $_SESSION['user_id'] = $id; 
-                $_SESSION['user_name'] = $username;
-                $_SESSION['user_email'] = $user_email;
-                $_SESSION['user_type'] = $user_type;
-
+            if ($status == 1 && password_verify($password, $hashedPassword)) {
+                $_SESSION['id'] = $id; 
+                $_SESSION['name'] = $username; 
+                $_SESSION['user_type'] = $user_type; 
+                $_SESSION['status'] = $status; 
                 header("Location: book-detail.php");
                 exit;
+            } else if($status == 0) {
+                $failed = "Your account is deactivated. Please contact support for further information.";
             } else {
                 $failed = "Invalid login credentials. Please try again.";
             }
@@ -39,11 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $failed = "Invalid login credentials. Please try again.";
         }
     } else {
+        // Handle SQL error
         echo "SQL Error: " . $stmt->error;
     }
 
     $stmt->close();
+    
 }
+
 ?>
 <!DOCTYPE html>
 <html>

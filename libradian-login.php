@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['id'] = $id; 
                 $_SESSION['name'] = $username; 
                 $_SESSION['user_type'] = $user_type; 
+                $_SESSION['status'] = $status; 
                 header("Location: book-detail.php");
                 exit;
             } else {

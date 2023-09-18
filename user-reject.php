@@ -1,6 +1,9 @@
 <?php
 include("config.php");
 
+session_start();
+
+
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     
@@ -11,7 +14,7 @@ if (isset($_GET['id'])) {
     $where = "ID = '{$id}'";
     
     $db->update($tableName, $data, $where);
-    
+
     header("Location: user-detail.php");
     exit();
 }

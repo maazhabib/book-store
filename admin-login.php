@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user'] = $username;
             $_SESSION['id'] = $row["id"];
             $_SESSION['user_type'] = $row["user_type"];
+            $_SESSION['status'] = $row["status"];
             // var_dump($_SESSION);
 
             if ($_SESSION['user_type'] == 'admin') {

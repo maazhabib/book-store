@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $where = "ID = '{$id}'";
     
     $db->update($tableName, $data, $where);
-    
+
     header("Location: libradian-detail.php");
     exit();
 }
