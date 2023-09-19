@@ -38,7 +38,7 @@
         $updateResult = $db->update($tableName, $data, $where);
 
         if ($updateResult) {
-        echo"<script>window.location.href='book_edit.php'</script>";
+        echo"<script>window.location.href='book-detail.php'</script>";
         } else {
             // echo "Error updating book data: " . $db->getMysqli()->error;
         }

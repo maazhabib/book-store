@@ -71,9 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="agileits-top">
                 <form method="post">
 
-                    <input class="text" type="text" name="uname" placeholder="Username" required=""><br>
+                    <input class="text" type="text" name="uname" value="<?php if(isset($_POST['uname'])) echo $_POST['uname'] ?>" placeholder="Username" required=""><br>
 
-                    <input class="text email" type="email" name="email" placeholder="Email" required=""><br>
+                    <input class="text email" type="email" name="email" value="<?php if(isset($_POST['email'])) echo $_POST['email'] ?>" placeholder="Email" required=""><br>
 
                     <input class="text" type="password" name="password" placeholder="Password" required="">
                     <p style="color: red;"><?php echo @$passerr ?></p>

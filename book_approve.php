@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
     
     $db->update($tableName, $data, $where);
     
-    header("Location: book_edit.php");
+    header("Location: book-detail.php");
     exit();
 }
 ?>

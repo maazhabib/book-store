@@ -51,7 +51,7 @@ include("header.php");
               <a href="book-detail.php">
                 <button class="btn inline-flex justify-center btn-outline-dark !bg-black-500 !text-white">
                   <span class="flex items-center">
-                    <span>Show books</span>
+                    <span>BACK</span>
                   </span>
                 </button>
               </a>
@@ -80,7 +80,7 @@ include("header.php");
                     
                       </div>
 
-                      <input class="btn flex justify-center btn-dark mt-5 ml-auto" name="send" type="submit" value="Enter Book">
+                      <input class="btn flex justify-center btn-dark mt-5 ml-auto" name="send" type="submit" value="SUBMIT">
                       <div id="image-preview"></div>
                     </div>
                   </div>
