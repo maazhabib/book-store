@@ -133,9 +133,9 @@ if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
                                                     <iconify-icon class="icon-arrow" icon="heroicons-outline:chevron-right"></iconify-icon>
                                                 </a>
                                                 <ul class="sidebar-submenu">
-                                                    <li>
+                                                    <!-- <li>
                                                         <a href="book_edit.php">Books Detail</a>
-                                                    </li>
+                                                    </li> -->
                                                     <li>
                                                     <a href="book-detail.php">Books</a>
                                                             

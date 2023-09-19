@@ -125,7 +125,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                           <p><?php echo $book['desc']; ?></p>
                           <br>
                           <td class="table-td">
-                              </td>
+                              
                                                                   <?php if ($user_type == 'admin' || $user_type == 'librarian' ) { ?>
                                                                         <td class="table-td">
                                                                             <div class="dropstart relative">
@@ -163,21 +163,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                                                             </div>
                                                                         </td>
                                                                         <?php }?>
-                                       <?php
-                                            $status = $book['status'];
-
-                                            if ($status == '1') {
-                                                $status = "Available";
-                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
-                                            } else {
-                                                $status = "NOT Available";
-                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
-                                            }
-                                        ?>
-
-                                     <div class="<?php echo $class ?>">
-                                    <?php echo $status; ?>
-                             </div>
+                                                                        </td>
+                                      
                              </td>
                           <div class="mt-4 space-x-4 rtl:space-x-reverse">
 
@@ -185,7 +172,22 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                 <a class="btn inline-flex justify-center btn-outline-dark capitalize" href="b_detail.php?id=<?php echo $book['id']; ?>">Book Detail</a>
 
 
-                          </div>
+                          </div><br>
+                          <?php
+                                            $status = $book['status'];
+
+                                            if ($status == '1') {
+                                                $status = "Book Available";
+                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
+                                            } else {
+                                                $status = "Book Not Available";
+                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
+                                            }
+                                        ?>
+
+                                        <div class="<?php echo $class ?>">
+                                            <?php echo $status; ?>
+                                         </div>
                         </div>
                       </div>
                     </div>

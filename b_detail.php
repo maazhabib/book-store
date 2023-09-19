@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
 }
 
 // Check if the user is an admin, librarian, or regular user
-$userRole = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
+$usertype = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
 
 ?>
 
@@ -112,22 +112,23 @@ $userRole = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                                 </tbody>
                                             </table>
                                             <?php
-                                                if ($userRole === 'user' ) {
-                                                    if($book['status'] == '1'){
-                                                    // echo "<h2 style='text-align: center;'>BORROW BOOK</h2><br>";
+                                                if ($usertype === 'user' ) {
                                             ?>
-                                            <div class="container">
-                                                <div class="container">
-                                                    <form method="post">
-                                                        <?php if ($book['btn'] == '0') { ?>
-                                                            <label for="borrowDate" class="form-label">BORROW DATE</label>
-                                                            <input id="borrowDate" type="date" name="borrowDate" class="form-control" placeholder="Borrow Date" value="<?php echo $b_date; ?>" disabled><br>
-                                                            <label for="returnDate" class="form-label">RETURN DATE</label>
-                                                            <input id="returnDate" type="date" name="returnDate" class="form-control" placeholder="Return Date" required>
-                                                            <p style="color: red;"><?php echo @$error ?></p> <br>
+                                                            <div class="container">
+                                                                <div class="container">
+                                                                    <form method="post">
+                                                                        <?php if ($book['btn'] == '0') { ?>
+                                                                            <label for="borrowDate" class="form-label">BORROW DATE</label>
+                                                                            <input id="borrowDate" type="date" name="borrowDate" class="form-control" placeholder="Borrow Date" value="<?php echo $b_date; ?>" disabled><br>
+                                                                            <label for="returnDate" class="form-label">RETURN DATE</label>
+                                                                            <input id="returnDate" type="date" name="returnDate" class="form-control" placeholder="Return Date" required>
+                                                                            <p style="color: red;"><?php echo @$error ?></p> <br>
                                                         <?php } ?>
 
-                                                        <?php if ($book['status'] == '1') { ?>
+                                                    
+                                                        <?php if($book['status'] == '1'){ ?>
+                                                            
+                                                        
 
                                                             <?php if ($book['btn'] == '0') { ?>
                                                                 <input type="submit" value="borrow" ref="index.php" name="borrow" class="btn inline-flex justify-center btn-outline-success capitalize"></input>
@@ -137,7 +138,6 @@ $userRole = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                                                 <input type="submit" name="return" value="Return" class="btn inline-flex justify-center btn-outline-danger capitalize"></input>
                                                             <?php } ?>
 
-                                                        <?php } ?>
 
                                                         <br><br>
                                                     </form>
@@ -145,7 +145,7 @@ $userRole = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                             </div>
                                             <?php }
                                             else{
-                                                echo "<h2 style='text-align: center;'>Book not available</h2>";
+                                                echo "<h2 style='text-align: center;'>Book not available at that time</h2>";
                                                 
                                             }} else {
                                                 echo "<h2 style='text-align: center;'>Book borrowing is only available to users.</h2>";
