@@ -1,7 +1,7 @@
 <?php
-include "header.php";
-// include "config.php";
-// session_start();
+// include "header.php";
+include "config.php";
+session_start();
 $db = new Database();
 
 $recordsPerPage = 12;
@@ -29,6 +29,14 @@ if (!empty($searchCondition)) {
 }
 
 $totalPages = ceil($totalRecords / $recordsPerPage);
+
+// INNER JOIN WORK
+
+$sql = "SELECT  * from book as b INNER JOIN user as u on b.user_id = u.id";
+$result = $db->getMysqli($sql);
+// return $result;
+print_r( $result);
+die;
 ?>
 
 
@@ -46,7 +54,6 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
     <div class="page-content">
         <div class="transition-all duration-150 container-fluid" id="page_layout">
             <div id="content_layout">
-
                 <div class=" md:flex justify-between items-center">
                     <div>
                         <!-- BEGIN: Breadcrumb -->
@@ -69,9 +76,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                         </div>
                         <!-- END: BreadCrumb -->
                     </div>
-
                 </div>
-
                 <div class="tab-content mt-6" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-list" role="tabpanel" aria-labelledby="pills-list-tab">
                         <div class="tab-content">
@@ -86,40 +91,27 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                                             <th scope="col" class="table-th ">
                                                                 BOOKS
                                                             </th>
-
-
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-
-
-
-                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="space-x-2 py-4">
-
-
-
-
-                                                    <div class='space-y-6'>
-                                                        <div class="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+                                    <div class='space-y-6'>
+                                        <div class="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
                                 <?php foreach ($books as $book) {?>
 
                                 <div class="card rounded-md bg-white dark:bg-slate-800 lg:h-full  shadow-base">
                                 <div class="card-body flex flex-col p-6">
                                 <td class="table-td">
 
-
-
-                         <?php if ($user_type == 'admin' || $user_type == 'librarian') {?>
-                               <td class="table-td">
-                                   <div class="dropstart relative">
-                                       <button class="inline-flex justify-center items-center" type="button" id="tableDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                           <iconify-icon class="text-xl ltr:ml-2 rtl:mr-2" icon="heroicons-outline:dots-vertical"></iconify-icon>
-                                       </button>
+                                 <?php if ($user_type == 'admin' || $user_type == 'librarian') {?>
+                                       <td class="table-td">
+                                           <div class="dropstart relative">
+                                                <button class="inline-flex justify-center items-center" type="button" id="tableDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <iconify-icon class="text-xl ltr:ml-2 rtl:mr-2" icon="heroicons-outline:dots-vertical"></iconify-icon>
+                                                </button>
 
                                        <ul class="dropdown-menu min-w-max absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
                                            <li>
@@ -179,11 +171,13 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
     } else if ($status == 1 && $user_id != null) {
         $statusValue = "Not Available (Borrow BY $user_id)";
+        
         $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
     } else {
         $statusValue = "Book Available";
         $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
     }
+ 
     ?>
 
                                     <div class="<?php echo $class ?>">
