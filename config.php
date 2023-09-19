@@ -63,7 +63,6 @@ class Database
         $set = array();
 
         foreach ($data as $column => $value) {
-            // Escape the column name with backticks
             $set[] = "`$column` = '" . $this->mysqli->real_escape_string($value) . "'";
         }
 

@@ -13,7 +13,6 @@ $columnsToSelect = "ID, NAME";
 
 $result = $db->select($tableName, $columnsToSelect);
 
-
 $checkColumnQuery = "SHOW COLUMNS FROM books LIKE 'borrow_date'";
 $columnResult = $db->getMysqli()->query($checkColumnQuery);
 
@@ -22,25 +21,57 @@ if ($columnResult->num_rows === 0) {
     $db->getMysqli()->query($addColumnQuery);
 }
 
-if (isset($_POST['borrow'])) {
-    $newUserId = $userId;
-    $bookId = $_GET['id'];
-    $returnDate = $_POST['returnDate'];
+if($user_type == 'admin' || $user_type == 'librarian'){
 
-    $sql = "UPDATE books SET user_id = ?, b_date = ?, r_date = ?, btn = 1 WHERE id = ?";
-    $stmt = $db->getMysqli()->prepare($sql);
-    $stmt->bind_param("issi", $newUserId, $b_date, $returnDate, $bookId);
+    
+    if (isset($_POST['borrow'])) {
+        $id_user=$_POST['id_user'];
+        // $newUserId = $userId;
+        $bookId = $_GET['id'];
+        $returnDate = $_POST['returnDate'];
 
-    if ($stmt->execute()) {
-        // echo "Book borrowed successfully on $b_date. Please return by $returnDate.";
+        $sql = "UPDATE books SET user_id = ?, b_date = ?, r_date = ?, btn = 1 WHERE id = ?";
+        $stmt = $db->getMysqli()->prepare($sql);
+        $stmt->bind_param("issi", $id_user, $b_date, $returnDate, $bookId );
+
+        if ($stmt->execute()) {
+            // echo "Book borrowed successfully on $b_date. Please return by $returnDate.";
+        }
+
+    } elseif (isset($_POST['return'])) {
+        $bookId = $_GET['id'];
+        $sql = "UPDATE books SET user_id = NULL, b_date = NULL, r_date = NULL, btn = 0 WHERE id = $bookId";
+
+        if ($db->getMysqli()->query($sql)) {
+            // echo "Book returned successfully on $returnDate.";
+        }
     }
 
-} elseif (isset($_POST['return'])) {
-    $bookId = $_GET['id'];
-    $sql = "UPDATE books SET user_id = NULL, b_date = NULL, r_date = NULL, btn = 0 WHERE id = $bookId";
+}
 
-    if ($db->getMysqli()->query($sql)) {
-        // echo "Book returned successfully on $returnDate.";
+
+if($user_type == 'user'){
+
+    if (isset($_POST['borrow'])) {
+        $newUserId = $userId;
+        $bookId = $_GET['id'];
+        $returnDate = $_POST['returnDate'];
+
+        $sql = "UPDATE books SET user_id = ?, b_date = ?, r_date = ?, btn = 1 WHERE id = ?";
+        $stmt = $db->getMysqli()->prepare($sql);
+        $stmt->bind_param("issi", $newUserId, $b_date, $returnDate, $bookId);
+
+        if ($stmt->execute()) {
+            // echo "Book borrowed successfully on $b_date. Please return by $returnDate.";
+        }
+
+    } elseif (isset($_POST['return'])) {
+        $bookId = $_GET['id'];
+        $sql = "UPDATE books SET user_id = NULL, b_date = NULL, r_date = NULL, btn = 0 WHERE id = $bookId";
+
+        if ($db->getMysqli()->query($sql)) {
+            // echo "Book returned successfully on $returnDate.";
+        }
     }
 }
 
@@ -57,8 +88,6 @@ if (isset($_GET['id'])) {
         if (!$book) {
             // echo "Book not found or there was an error.";
         }
-    } else {
-        // echo "Error fetching book details from the database.";
     }
 }
 
@@ -118,56 +147,58 @@ $usertype = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                           
                                                             <div class="container">
                                                                 <div class="container">
-                          
+                                                                <form method="post">
                                                                     <?php if($user_type === 'admin' || $user_type === 'librarian'){?>
+
+                                                                        <?php if ($book['btn'] == '0') { ?>
 
                                                                 <div class="grid md:grid-cols-2 gap-6">
                                                                     <div>
-                                                                        <label for="basicSelect" class="form-label">Basic Select</label>
-                                                                        <select name="basicSelect" id="basicSelect" class="form-control w-full mt-2">
-                                                                        <option selected="Selected" disabled="disabled" value="none" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600">Select an option</option>
+                                                                        <label for="basicSelect" class="form-label">SELECT USER NAME</label>
+                                                                        <select name="id_user" id="basicSelect" name="" class="form-control w-full mt-2">
+                                                                        <option  selected="Selected" disabled="disabled" value="" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600">Select an option</option>
 
                                                                         <?php while($rowUser = $result->fetch_assoc() ){?>
-                                                                            <option value="<?php echo $rowUser['ID'] ?>" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600"><?php echo $rowUser['NAME'] ?></option>
+                                                                            <option id="u_id" value="<?php echo $rowUser['ID'] ?>" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600"><?php echo $rowUser['NAME'] ?></option>
                                                                         <?php }?>
 
                                                                         </select>
                                                                     </div>
                                                                 </div><br>
+                                                                <?php }?>
 
                                                                     <?php }?>
-                                                                    <form method="post">
+                                                                    
                                                                         <?php if ($book['btn'] == '0') { ?>
                                                                             <label for="borrowDate" class="form-label">BORROW DATE</label>
                                                                             <input id="borrowDate" type="date" name="borrowDate" class="form-control" placeholder="Borrow Date" value="<?php echo $b_date; ?>" disabled><br>
                                                                             <label for="returnDate" class="form-label">RETURN DATE</label>
                                                                             <input id="returnDate" type="date" name="returnDate" class="form-control" placeholder="Return Date" required>
                                                                             <p style="color: red;"><?php echo @$error ?></p> <br>
-                                                        <?php } ?>
+                                                                            <?php } ?>
 
                                                     
-                                                        <?php if($book['status'] == '1'){ ?>
-                                                            
-                                                        
+                                                                            <?php if($book['status'] == '1'){ ?>
+                                                                                
+                                                                            
 
-                                                            <?php if ($book['btn'] == '0') { ?>
-                                                                <input type="submit" value="borrow" ref="index.php" name="borrow" class="btn inline-flex justify-center btn-outline-success capitalize"></input>
-                                                            <?php } ?>
+                                                                                <?php if ($book['btn'] == '0') { ?>
+                                                                                    <input type="submit" value="borrow" ref="index.php" name="borrow" class="btn inline-flex justify-center btn-outline-success capitalize"></input>
+                                                                                <?php } ?>
 
-                                                            <?php if ($book['btn'] == '1') { ?>
-                                                                <input type="submit" name="return" value="Return" class="btn inline-flex justify-center btn-outline-danger capitalize"></input>
-                                                            <?php } ?>
+                                                                                <?php if ($book['btn'] == '1') { ?>
+                                                                                    <input type="submit" name="return" value="Return" class="btn inline-flex justify-center btn-outline-danger capitalize"></input>
+                                                                                <?php } ?>
 
 
-                                                        <br><br>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <?php }
-                                            else{
-                                                echo "<h2 style='text-align: center;'>Book not available at that time</h2>";
-                                                
-                                            }?><br><br><br>
+                                                                            <br><br>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php }
+                                                                                else{
+                                                                                    echo "<h2 style='text-align: center;'>Book not available at that time</h2>";
+                                                                                }?><br><br><br>
+                                                                    </form>
                                         </div>
                                     </div>
                                 </div>
