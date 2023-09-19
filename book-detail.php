@@ -16,6 +16,7 @@ if (isset($_GET['search'])) {
     $searchCondition = "name LIKE '%$searchKeyword%'";
 }
 
+
 $offset = ($currentPage - 1) * $recordsPerPage;
 $limit = $recordsPerPage;
 $orderBy = 'ID ASC';
@@ -104,92 +105,99 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 
 
 
-                                        <div class='space-y-6'>
-                                            <div class="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
-                      <?php foreach ($books as $book) {?>
-                    <div class="card rounded-md bg-white dark:bg-slate-800 lg:h-full  shadow-base">
-                      <div class="card-body flex flex-col p-6">
-                        <header class="flex mb-5 items-center">
-                          <div class="flex-1">
-                            <div class="card-title font-Inter text-slate-900 dark:text-white"><?php echo $book['writer']; ?></div>
-                            <!-- <div class="card-subtitle font-Inter">This is a subtitle</div> -->
-                          </div>
-                        </header>
-                        <div class="image-box mb-6">
-                        <?php $imageUrl = "images/" . $book['image'];?>
-                          <img style="width: 100%; height:400px" src="<?php echo $imageUrl; ?>" alt="" class="block w-full h-full object-cover rounded-md">
-                        </div>
-                        
-                        <div class="card-text h-full">
-                        <h3><?php echo $book['name']; ?></h3><br>
-                          <p><?php echo $book['desc']; ?></p>
-                          <br>
-                          <td class="table-td">
+                                                    <div class='space-y-6'>
+                                                        <div class="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+                                <?php foreach ($books as $book) {?>
+                                    
+                                <div class="card rounded-md bg-white dark:bg-slate-800 lg:h-full  shadow-base">
+                                <div class="card-body flex flex-col p-6">
+                                <td class="table-td">
                          
                                      
                               
-                                                                  <?php if ($user_type == 'admin' || $user_type == 'librarian' ) { ?>
-                                                                        <td class="table-td">
-                                                                            <div class="dropstart relative">
-                                                                                <button class="inline-flex justify-center items-center" type="button" id="tableDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <iconify-icon class="text-xl ltr:ml-2 rtl:mr-2" icon="heroicons-outline:dots-vertical"></iconify-icon>
-                                                                                </button>
-                                                                                
-                                                                                <ul class="dropdown-menu min-w-max absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
-                                                                                    <li>
-                                                                                        <a href="book-edt.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
-                                                                                            <span>EDIT</span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <li>
-                                                                                        <a href="book_delete.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
-                                                                                            <span>DELETE</span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <?php if ($book['status'] == '0') { ?>
-                                                                                    <li>
-                                                                                        <a href="book_approve.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
-                                                                                            <span>AVARIABLE</span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <?php }?>
+                         <?php if ($user_type == 'admin' || $user_type == 'librarian' ) { ?>
+                               <td class="table-td">
+                                   <div class="dropstart relative">
+                                       <button class="inline-flex justify-center items-center" type="button" id="tableDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                           <iconify-icon class="text-xl ltr:ml-2 rtl:mr-2" icon="heroicons-outline:dots-vertical"></iconify-icon>
+                                       </button>
+                                       
+                                       <ul class="dropdown-menu min-w-max absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
+                                           <li>
+                                               <a href="book-edt.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
+                                                   <span>EDIT</span>
+                                               </a>
+                                           </li>
+                                           <li>
+                                               <a href="book_delete.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
+                                                   <span>DELETE</span>
+                                               </a>
+                                           </li>
+                                           <?php if ($book['status'] == '0') { ?>
+                                           <li>
+                                               <a href="book_approve.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
+                                                   <span>AVARIABLE</span>
+                                               </a>
+                                           </li>
+                                           <?php }?>
 
-                                                                                    <?php if ($book['status'] == '1') { ?>
-                                                                                    <li>
-                                                                                        <a href="book_reject.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
-                                                                                            <span>NOT AVARIABLE</span>
-                                                                                        </a>
-                                                                                    </li>
-                                                                                    <?php }?>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </td>
-                                                                        <?php }?>
-                                                                        </td>
-                                      
-                             </td>
-                          <div class="mt-4 space-x-4 rtl:space-x-reverse">
+                                           <?php if ($book['status'] == '1') { ?>
+                                           <li>
+                                               <a href="book_reject.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
+                                                   <span>NOT AVARIABLE</span>
+                                               </a>
+                                           </li>
+                                           <?php }?>
+                                       </ul>
+                                   </div>
+                               </td>
+                               <?php }?>
+                               </td>
+
+                       </td>
+                                    <header class="flex mb-5 items-center">
+                                    <div class="flex-1">
+                                        <div class="card-title font-Inter text-slate-900 dark:text-white"><?php echo $book['writer']; ?></div>
+                                        <!-- <div class="card-subtitle font-Inter">This is a subtitle</div> -->
+                                    </div>
+                                    </header>
+                                    <div class="image-box mb-6">
+                                    <?php $imageUrl = "images/" . $book['image'];?>
+                                    <img style="width: 100%; height:400px" src="<?php echo $imageUrl; ?>" alt="" class="block w-full h-full object-cover rounded-md">
+                                    </div>
+                                    
+                                    <div class="card-text h-full">
+                                    <h3><?php echo $book['name']; ?></h3><br>
+                                    <p><?php echo $book['desc']; ?></p>
+                                    <br>
+                          
+                                                            <div class="mt-4 space-x-4 rtl:space-x-reverse">
 
 
-                                <a class="btn inline-flex justify-center btn-outline-dark capitalize" href="b_detail.php?id=<?php echo $book['id']; ?>">Book Detail</a>
+                                                                    <a class="btn inline-flex justify-center btn-outline-dark capitalize" href="b_detail.php?id=<?php echo $book['id']; ?>">Book Detail</a>
 
 
-                          </div><br>
-                          <?php
-                                            $status = $book['status'];
+                                                            </div><br>
+                                                            <?php
 
-                                            if ($status == '1') {
-                                                $status = "Book Available";
-                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
-                                            } else {
-                                                $status = "Book Not Available";
-                                                $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
-                                            }
-                                        ?>
+                                                        $status = $book['status'];
 
-                                        <div class="<?php echo $class ?>">
-                                            <?php echo $status; ?>
-                                         </div>
+                                                        if ($status == '1') {
+                                                            $status = "Book Available";
+                                                            $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
+                                                        } else {
+                                                            $status = "Book Not Available";
+                                                            $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
+                                                        } 
+                                                     
+                                                    ?>
+                                                    
+
+                                                    <div class="<?php echo $class ?>">
+                                                        <?php echo $status; ?>
+                                                    </div>
+
+                                                 
                         </div>
                       </div>
                     </div>
