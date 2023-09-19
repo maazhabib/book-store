@@ -8,6 +8,12 @@ $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 $b_date = date('Y-m-d');
 
+$tableName = "user";
+$columnsToSelect = "ID, NAME";
+
+$result = $db->select($tableName, $columnsToSelect);
+
+
 $checkColumnQuery = "SHOW COLUMNS FROM books LIKE 'borrow_date'";
 $columnResult = $db->getMysqli()->query($checkColumnQuery);
 
@@ -27,17 +33,14 @@ if (isset($_POST['borrow'])) {
 
     if ($stmt->execute()) {
         // echo "Book borrowed successfully on $b_date. Please return by $returnDate.";
-    } else {
-        // echo "Error updating the table for borrowing: " . $db->getMysqli()->error;
     }
+
 } elseif (isset($_POST['return'])) {
     $bookId = $_GET['id'];
     $sql = "UPDATE books SET user_id = NULL, b_date = NULL, r_date = NULL, btn = 0 WHERE id = $bookId";
 
     if ($db->getMysqli()->query($sql)) {
         // echo "Book returned successfully on $returnDate.";
-    } else {
-        // echo "Error updating the table for returning: " . $db->getMysqli()->error;
     }
 }
 
@@ -59,7 +62,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Check if the user is an admin, librarian, or regular user
 $usertype = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
 
 ?>
@@ -111,11 +113,29 @@ $usertype = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                                     </div>
                                                 </tbody>
                                             </table>
-                                            <?php
-                                                if ($usertype === 'user' ) {
-                                            ?>
+                                            <div class="card-text h-full space-y-6">
+                        
+                                          
                                                             <div class="container">
                                                                 <div class="container">
+                          
+                                                                    <?php if($user_type === 'admin' || $user_type === 'librarian'){?>
+
+                                                                <div class="grid md:grid-cols-2 gap-6">
+                                                                    <div>
+                                                                        <label for="basicSelect" class="form-label">Basic Select</label>
+                                                                        <select name="basicSelect" id="basicSelect" class="form-control w-full mt-2">
+                                                                        <option selected="Selected" disabled="disabled" value="none" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600">Select an option</option>
+
+                                                                        <?php while($rowUser = $result->fetch_assoc() ){?>
+                                                                            <option value="<?php echo $rowUser['ID'] ?>" class="py-1 inline-block font-Inter font-normal text-sm text-slate-600"><?php echo $rowUser['NAME'] ?></option>
+                                                                        <?php }?>
+
+                                                                        </select>
+                                                                    </div>
+                                                                </div><br>
+
+                                                                    <?php }?>
                                                                     <form method="post">
                                                                         <?php if ($book['btn'] == '0') { ?>
                                                                             <label for="borrowDate" class="form-label">BORROW DATE</label>
@@ -147,9 +167,7 @@ $usertype = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : '';
                                             else{
                                                 echo "<h2 style='text-align: center;'>Book not available at that time</h2>";
                                                 
-                                            }} else {
-                                                echo "<h2 style='text-align: center;'>Book borrowing is only available to users.</h2>";
-                                            } ?><br><br><br>
+                                            }?><br><br><br>
                                         </div>
                                     </div>
                                 </div>

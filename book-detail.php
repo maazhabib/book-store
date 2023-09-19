@@ -125,6 +125,8 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                           <p><?php echo $book['desc']; ?></p>
                           <br>
                           <td class="table-td">
+                         
+                                     
                               
                                                                   <?php if ($user_type == 'admin' || $user_type == 'librarian' ) { ?>
                                                                         <td class="table-td">
