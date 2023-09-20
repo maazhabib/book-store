@@ -1,7 +1,8 @@
 <?php
-// include "header.php";
-include "config.php";
-session_start();
+
+include "header.php";
+// include "config.php";
+// session_start();
 $db = new Database();
 
 $recordsPerPage = 12;
@@ -30,13 +31,15 @@ if (!empty($searchCondition)) {
 
 $totalPages = ceil($totalRecords / $recordsPerPage);
 
-// INNER JOIN WORK
+$sql = "SELECT user.* FROM user INNER JOIN books ON user.id = books.user_id";
 
-$sql = "SELECT  * from book as b INNER JOIN user as u on b.user_id = u.id";
-$result = $db->getMysqli($sql);
-// return $result;
-print_r( $result);
-die;
+$result = $db->executeQuery($sql);
+
+
+
+// print_r($result);
+// die;    
+
 ?>
 
 
@@ -132,7 +135,7 @@ die;
                                            </li>
                                            <?php }?>
 
-                                           <?php if ($book['status'] == '1') {?>
+                                           <?php if ($book['status'] == '1') {?> 
                                            <li>
                                                <a href="book_reject.php?id=<?php echo $book['id']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
                                                    <span>NOT AVARIABLE</span>
@@ -145,7 +148,7 @@ die;
                                <?php }?>
                                </td>
 
-                       </td>
+                                </td>
                                     <header class="flex mb-5 items-center">
                                     <div class="flex-1">
                                         <div class="card-title font-Inter text-slate-900 dark:text-white"><?php echo $book['writer']; ?></div>
@@ -163,22 +166,25 @@ die;
                                     <br>
                                     <?php
 
-    $user_id = $book['user_id'];
-    $status = $book['status'];
+                                    
+                                    $user_id = $book['user_id'];
+                                    $status = $book['status'];
 
-    if ($status == 0) {
-        $statusValue = "Not Available";
-        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
-    } else if ($status == 1 && $user_id != null) {
-        $statusValue = "Not Available (Borrow BY $user_id)";
-        
-        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
-    } else {
-        $statusValue = "Book Available";
-        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
-    }
- 
-    ?>
+                                    if ($status == 0) {
+                                        $statusValue = "Not Available";
+                                        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
+                                    } else if ($status == 1 && $user_id != null) {
+                                        $row= $result->fetch_assoc();
+                                        $statusValue = "Not Available (Borrow BY $row[name])";
+                                        
+                                        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500";
+                                        
+                                    } else {
+                                        $statusValue = "Book Available";
+                                        $class = "inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500";
+                                    }
+                                
+                                    ?> 
 
                                     <div class="<?php echo $class ?>">
                                     <?php echo $statusValue; ?>

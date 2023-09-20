@@ -72,6 +72,16 @@ class Database
         return $this->executeQuery($sql);
     }
 
+
+    public function innerJoin($table1, $table2, $onCondition, $columns = '*')
+{
+    $sql = "SELECT $columns FROM $table1 ";
+    $sql .= "INNER JOIN $table2 ON $onCondition";
+
+    return $this->executeQuery($sql);
+}
+
+
     public function __destruct()
     {
         $this->mysqli->close();
