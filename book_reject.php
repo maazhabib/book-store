@@ -1,4 +1,5 @@
 <?php
+// yaha pa ham na book reject ki ha ka hmaray pass ni ha 
 include("config.php");
 
 if (isset($_GET['id'])) {

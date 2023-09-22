@@ -1,4 +1,5 @@
 <?php
+// ya dlt work ha yaha pa admin ka status update ho rha ha
 include("config.php");
 
 if (isset($_GET['id'])) {

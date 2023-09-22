@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-
+//  ya user signup ha yaha paa data get karay ga 
 if(isset($_POST["submit"])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
@@ -8,20 +8,20 @@ if(isset($_POST["submit"])) {
     $cnic = $_POST["cnic"];
     $password = $_POST["password"];
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
+// blow fish and pattern 
     
     $namePattern= '/^(?=[a-zA-Z0-9._]{4,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/';
     $phonePattern = '/^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/';
     $cnicPattern= '/^[0-9]{5}-[0-9]{7}-[0-9]$/';
     $passwordPattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+}{":;<>,.?~\\-]+$/';
 
-
+// pregmatch 
     if (preg_match($namePattern, $name) &&
     filter_var($email, FILTER_VALIDATE_EMAIL) &&
     preg_match($phonePattern, $phone) &&
     preg_match($cnicPattern, $cnic) &&
     preg_match($passwordPattern, $password)) {
-    
+    // data enter 
     $table = "user";
     $data = array(
         "name" => $name,
@@ -34,7 +34,7 @@ if(isset($_POST["submit"])) {
 
     $db = new Database();
     $result = $db->insert($table, $data);
-
+// query sesses jb ho gi to if condition ya phr else
     if($result) {
         $success = "Registration successful!";
         header("Location: user-login.php");

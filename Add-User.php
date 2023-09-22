@@ -1,21 +1,24 @@
 <?php
 include("header.php");
-
+// yaha pa ham na agar data get kr ka data submit kia ha 
 if(isset($_POST["submit"])) {
   $name = $_POST["name"];
   $email = $_POST["email"];;
   $password = $_POST["password"];
+  // yaha pa ham na blow fish kia hua ha 
   $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-  
+  // yaha pa ham ma pattern set kia ha hamay kis tarah data match karana ha ka match ho to data base ma data enter ho ga 
   $namePattern= '/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/';
   $passwordPattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+}{":;<>,.?~\\-]+$/';
 
-
+// yaha pa ham na preg_match ki ha k ajo data ham form sa la rha ha or jo pattern match ha to hamara data database ma chala jay ga
   if (preg_match($namePattern, $name) &&
   filter_var($email, FILTER_VALIDATE_EMAIL) &&
   preg_match($passwordPattern, $password)) {
   
+    // yaha pa data ham admin pannel ma bhj bhj rha ha 
+
   $table = "admin";
   $data = array(
       "name" => $name,
@@ -26,7 +29,7 @@ if(isset($_POST["submit"])) {
 
   $db = new Database(); 
   $result = $db->insert($table, $data);
-
+// yaha pa hamari query sucessfully run ho gi to ous ki page location change ho jay gi vrna else part chl jay ga
   if($result) {
       $success = "Registration successful!";
 

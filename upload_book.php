@@ -1,4 +1,7 @@
+<!-- yaha pa ham na phalay data yaha pa phlay call kia phe is ma na yaha pa get kia server sa phr 
+ham na data get kia phr ham na ous ma data dal ka vapis ousi page pa bhaj dia -->
 
+<!-- $_SERVER[]  (to know about the request method (for example GET, POST, PUT, etc) that is used to access the page) -->
 <?php 
 
 include 'config.php';
@@ -27,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $response = array();
 
+        // yaha pa agar hamri query seccesfuly run krti ha to yaha pa hamay msg show ho jay ga
+
         if ($insert_result) {
             $response['success'] = true;
             $response['message'] = 'Data inserted successfully.';
@@ -36,6 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $response['message'] = 'Image upload error.';
     }
+
+    // yaha json_encode hamaray data ko agar array ma ha ya object ya isa json ma convert kr k a bhj raha ha
+
+    // json_encode  (to convert PHP array or object into JSON representation)
 
     echo json_encode($response);
     // var_dump($insert_result);

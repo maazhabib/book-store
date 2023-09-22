@@ -6,6 +6,7 @@ $db = new Database();
 
 $recordsPerPage = 5; 
 
+
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
     $currentPage = intval($_GET['page']);
 } else {
@@ -14,11 +15,16 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 
 $offset = ($currentPage - 1) * $recordsPerPage;
 
+// yaha pa book data call kia ha  
+
 $tableName = "books";
 $columnsToSelect = "ID, NAME, `DESC`, IMAGE, WRITER,STATUS";
 
+// pagination work 
+
 $limit = "$offset, $recordsPerPage"; 
 $result = $db->select($tableName, $columnsToSelect, null, $limit);
+
 
 $totalRecordsQuery = "SELECT COUNT(*) AS total FROM $tableName";
 $totalRecordsResult = $db->select($tableName, "COUNT(*) AS total", null);
@@ -31,6 +37,9 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 $prevPage = ($currentPage > 1) ? $currentPage - 1 : 1;
 $nextPage = ($currentPage < $totalPages) ? $currentPage + 1 : $totalPages;
 
+// yaha pa ham na search bar vala work kia ha is ma ham na data get kai ha or ous ka bad ham na is ma 
+// data call karaya k asearch krnay ka bad kia data show karana ha is ka bad ham na is ma connection build 
+// karaya ha  
 
 if (isset($_GET['search'])) {
     $searchTerm = $_GET['data_enter'];
@@ -136,6 +145,7 @@ if (isset($_GET['search'])) {
                                                     <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
 
                                                     <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                                        <!-- yaha pa ham na loop ma data fetch kia ha  -->
                                                         <?php while ($book = mysqli_fetch_array($result)) { ?>
                                                                     <tr>
                                                                         <td class="table-td"><?php echo $book['ID']; ?></td>

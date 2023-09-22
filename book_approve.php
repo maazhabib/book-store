@@ -1,4 +1,7 @@
 <?php
+
+// yaha pa ham na book ka status update kia ha ka hamaray pass book ha 
+
 include("config.php");
 
 if (isset($_GET['id'])) {

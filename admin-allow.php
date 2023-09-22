@@ -1,4 +1,5 @@
 <?php 
+// yaha pa ham na id get kr ka status ko update kr ka 1 kr ka apprve kia ha
 include("config.php");
 
 $id=$_GET['id'];

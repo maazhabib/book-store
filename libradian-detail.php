@@ -5,6 +5,7 @@ $db = new Database();
 
 $recordsPerPage = 10; 
 
+// paginatino data get 
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
     $currentPage = intval($_GET['page']);
 } else {
@@ -13,11 +14,15 @@ if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 
 $offset = ($currentPage - 1) * $recordsPerPage;
 
+// yaha pa ham na librarian ka data get kia ha 
+
 $tableName = "shoper";
 $columnsToSelect = "ID, NAME, EMAIL,ADDRESS, PHONE, CNIC, STATUS";
 
 $limit = "$offset, $recordsPerPage"; 
 $result = $db->select($tableName, $columnsToSelect, null, $limit);
+
+// yaha pa ham na data get kr ka query run karai ha
 
 $totalRecordsQuery = "SELECT COUNT(*) AS total FROM $tableName";
 $totalRecordsResult = $db->select($tableName, "COUNT(*) AS total", null);
@@ -30,7 +35,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
 $prevPage = ($currentPage > 1) ? $currentPage - 1 : 1;
 $nextPage = ($currentPage < $totalPages) ? $currentPage + 1 : $totalPages;
 
-
+// yaha pa ham na search bar vala kam kia ha 
 if (isset($_GET['search'])) {
     $searchTerm = $_GET['data_enter'];
 
@@ -145,6 +150,7 @@ if (isset($_GET['search'])) {
                                                         </tr>
                                                     </thead>
                                                     <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                                        <!-- yaha pa ham na data fetch kia ha  -->
                                                         <?php while ($row = mysqli_fetch_array($result)) { ?>
                                                                     <tr>
                                                                         <td class="table-td"><?php echo $row['ID']; ?></td>
@@ -157,6 +163,7 @@ if (isset($_GET['search'])) {
 
                                                                         <td class="table-td">
                                                                         <?php
+                                                                        // yaha status vala work hua ha ka approve ha ya ni ya srf show karay ga
                                                                         $status = $row['STATUS']; // Assuming 'STATUS' is the correct column name
 
                                                                         if ($status == '') {
@@ -182,6 +189,8 @@ if (isset($_GET['search'])) {
                                                                                 </button>
                                                                                 <ul class="dropdown-menu min-w-max absolute text-sm text-slate-700 dark:text-white hidden bg-white dark:bg-slate-700 shadow z-[2] float-left overflow-hidden list-none text-left rounded-lg mt-1 m-0 bg-clip-padding border-none">
                                                                                     <li>
+
+                                                                                    <!-- yaha pa ham na id bhaji ha approve ka lia ya reject ka lia  -->
                                                                                         <a href="approve.php?id=<?php echo $row['ID']; ?>" class="hover:bg-slate-900 dark:hover:bg-slate-600 dark:hover:bg-opacity-70 hover:text-white w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm dark:text-slate-300 last:mb-0 cursor-pointer first:rounded-t last:rounded-b flex space-x-2 items-center capitalize rtl:space-x-reverse">
                                                                                             <span>Approve</span>
                                                                                         </a>

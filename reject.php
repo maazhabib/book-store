@@ -1,4 +1,5 @@
 <?php
+// yaha pa ham data update kr ka reject karay ga librarian
 include("config.php");
 
 if (isset($_GET['id'])) {

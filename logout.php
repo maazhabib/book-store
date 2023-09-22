@@ -1,11 +1,9 @@
 <?php
 session_start();
 include("config.php");
-
+// yaha pa ham na id get ki ha ka kon login ho ga ous time
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 $user_type = isset($_GET['type']) ? $_GET['type'] : null;
-
-var_dump($id);
 
 if (
     isset($_SESSION['id']) &&
@@ -16,6 +14,8 @@ if (
     session_unset();
     session_destroy();
 }
+
+// agar ham logout click karay ga to yaha pa to jo ous time login ho ga vo logout ho jay ga
 
 if ($user_type === 'admin') {
     session_unset();

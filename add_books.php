@@ -79,13 +79,13 @@ include("header.php");
                         <input id="phone" type="file" name="image" class="form-control" placeholder="Iaage" required>
                     
                       </div>
-
+                      
                       <input class="btn flex justify-center btn-dark mt-5 ml-auto" name="send" type="submit" value="SUBMIT">
-                      <div id="image-preview"></div>
                     </div>
                   </div>
                 </div>
               </form>
+              <div id="image-preview"></div>
             </div>
           </div>
         </div>
@@ -145,6 +145,8 @@ include("header.php");
 <<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script>
       
+      // yaha pa ma na ajax ke ka data upload_book.php pa bhaja ha or vaha sa add kara ka yaha pa get kia ha 
+
 $(document).ready(function() {
     $('#image').change(function() {
         var input = this;   

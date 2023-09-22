@@ -1,4 +1,5 @@
 <?php
+// data update and approve a user detail and aprove a data 
 include("config.php");
 
 if (isset($_GET['id'])) {

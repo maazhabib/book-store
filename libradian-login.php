@@ -4,10 +4,14 @@ include("config.php");
 
 $database = new Database();
 
+// yaha pa agar server post ka brabar ho ga to yya agay bhr jay ga 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["uname"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+
+    // yaha ham na select kia ha 
 
     $sql = "SELECT id, password, status, user_type FROM shoper WHERE name = ? AND email = ?";
     $stmt = $database->getMysqli()->prepare($sql);
@@ -15,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
-
+// yaha pa ham na num row kia ha 
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             $hashedPassword = $row["password"];

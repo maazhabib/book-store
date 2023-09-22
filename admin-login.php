@@ -18,14 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
         $hashedPassword = $row["password"];
-
+// yaha pa agar status hata dia ha agar password vaerify hota ha to agay bhr jay ga 
         if ($row["status"] == 1 && password_verify($password, $hashedPassword)) {
             $_SESSION['user'] = $username;
             $_SESSION['id'] = $row["id"];
             $_SESSION['user_type'] = $row["user_type"];
             $_SESSION['status'] = $row["status"];
-            // var_dump($_SESSION);
 
+            // yaha pa agar data agar user_type agar admin ka brabar ha to ya index pa bhr jay ga
             if ($_SESSION['user_type'] == 'admin') {
                 header("Location: index.php");
             } else  if($row["status"] == 0) {
@@ -35,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
             exit;
-// die;
         } else {
             $failed = "Invalid login credentials. Please try again.";
         }

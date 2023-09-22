@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-
+// yaha data form sa get kia ha 
 if(isset($_POST["submit"])) {
     $name = $_POST["name"];
     $email = $_POST["email"];
@@ -8,15 +8,15 @@ if(isset($_POST["submit"])) {
     $phone = $_POST["phone"];
     $cnic = $_POST["cnic"];
     $password = $_POST["password"];
+    // patetrn vala work and blow fish work  
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
     
     $namePattern= '/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/';
     $phonePattern = '/^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/';
     $cnicPattern= '/^[0-9]{5}-[0-9]{7}-[0-9]$/';
     $passwordPattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+}{":;<>,.?~\\-]+$/';
 
-
+// patern match hua to agay bhr jay ga 
     if (preg_match($namePattern, $name) &&
     filter_var($email, FILTER_VALIDATE_EMAIL) &&
     preg_match($phonePattern, $phone) &&

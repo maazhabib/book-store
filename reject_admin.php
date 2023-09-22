@@ -1,4 +1,5 @@
 <?php
+// data delete  admin data update = 0 
 include("config.php");
 
 if (isset($_GET['id'])) {

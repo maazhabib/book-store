@@ -4,7 +4,7 @@ session_start();
 
 $database = new Database();
 $failed = ""; 
-
+// user login same as librarian change only table name
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["uname"];
     $email = $_POST["email"];

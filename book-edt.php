@@ -4,12 +4,12 @@
 
     // Initialize the Database class
     $db = new Database();
-
+// yaha pa ham na id get ki ha 
     if (isset($_GET['id'])) {
         $bookId = $_GET['id'];
-
+// yaha book data get kia ha id sa
         $bookData = $db->select("books", "*", "id = $bookId");
-
+// yaha pa agar hamara data brabar false sa and book data 0 sa gretaer hota ha to hamaray pass ya data chal jay ga is ma ham na book data fetchassoc kia ha
         if ($bookData !== false && $bookData->num_rows > 0) {
             $row = $bookData->fetch_assoc(); 
         } else {
@@ -18,6 +18,8 @@
     } else {
         echo "No book ID provided in the URL.";
     }
+
+    // yaha pa ham na data get kia or update work kia ha
 
     if (isset($_POST['submit'])) {
         // Handle form submission here

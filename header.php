@@ -1,6 +1,13 @@
 <?php
+
+// yaha pa ham na sb sa phalay session start kia ka user jb login ka time use aata ha ka user bina login ka website use na kray 
+// ous ka bad config ki file include ki ha ka ham na jo function banay ha jo config ki file ma ha ham ousay easyly acces kr sakay oun function ko
+
 session_start();
 include("config.php");
+
+// yahapa condition banai hui ha ka agar user ya admin ko login ha or vo ous kr rha ha to jasay ham ousay ban karay to vo user ya librarian ousi
+// time logout ho jay ga or ap ko msg aajy ga 
 
 if (array_key_exists('user_type', $_SESSION) && ($_SESSION['user_type'] == 'user' || $_SESSION['user_type'] == 'librarian')) {
     $tableName = $_SESSION['user_type'] == 'user' ? 'user' : 'shoper';
@@ -16,12 +23,16 @@ if (array_key_exists('user_type', $_SESSION) && ($_SESSION['user_type'] == 'user
     }
 }
 
+// yaha pa ham na session sa user_type ka lia  banaya ha
+
 if (isset($_SESSION['user_type'])) {
     $user_type = $_SESSION['user_type'];
 } else {
     $user_type = ''; 
     
 }
+
+// yaha status vala kam kia ha ka agar user ya librarian ko reject krna ka lia yaha status call kia ha 
 
 if (isset($_SESSION['status'])) {
     $status = $_SESSION['status'];
@@ -33,28 +44,24 @@ $admin_id = null;
 $librarian_id = null;
 $user_id = null;
 
-if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
+// yaha pa ham na session set kia admin, librarian, user ,yaha session set hua ha ka jis time jo login ho ga ous ko kon kon sa option 
+// dikanay ha ka user ha ya librarian ha ya admin 
 
-    $user_type = $_SESSION['user_type'];
-    
+if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
+    $user_type = $_SESSION['user_type'];    
 } else {
     header("Location: user-login.php");
 }
 ?>
 
-
-
-
 <!DOCTYPE html>
 <html lang="zxx" dir="ltr" class="light">
-
 <head>
     <link rel="stylesheet" href="assets/css/style1.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <title>Vaccination Admin pannel</title>
-   
     <link rel="icon" type="image/png" href="assets/images/icon/icon (2).png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -67,7 +74,6 @@ if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
 </head>
 
 <body class=" font-inter dashcode-app" id="body_class">
-
     <main class="app-wrapper">
         <div class="sidebar-wrapper group">
             <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
@@ -89,14 +95,9 @@ if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
                 </button>
             </div>
             <div id="nav_shadow" class="nav_shadow h-[60px] absolute top-[80px] nav-shadow z-[1] w-full transition-all duration-200 pointer-events-none opacity-0"></div>
-            
-
             <ul class="sidebar-menu">
-                
+                <!-- yaha pa ham na session banaya hua ka kis ko kia show karana aa ha  -->
             <?php
-
-                            
-
                 if ($user_type == 'admin') { ?>
                             <li class="sidebar-menu-title">ADMIN MENU</li>
                                 <li class="">
@@ -1650,70 +1651,32 @@ if (isset($_SESSION['user_type']) && !empty($_SESSION['user_type'])) {
                                         <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
         overflow-hidden">
                                             <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
-                                                <!-- <li>
-                                                    <a href="index.php" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:user" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Dashboard</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="chat.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:chat" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Chat</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="email.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:mail" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Email</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="todo.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:clipboard-check" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Todo</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="settings.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:cog" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Settings</span>
-                                                    </a>
 
-                                                </li>
-                                                <li>
-                                                    <a href="pricing.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-                dark:text-white font-normal">
-                                                        <iconify-icon icon="heroicons-outline:credit-card" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                                                        <span class="font-Inter">Price</span>
-                                                    </a>
-                                                </li>
-                                                <li> -->
-                                                    <!-- Only display the logout link for the logged-in user type -->
-    <?php if ($user_type === 'admin'): ?>
-        <!-- For Admin logout -->
-        <a href="logout.php?type=admin&id=<?php echo $admin_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
-            <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-            <span class="font-Inter">Logout (Admin)</span>
-        </a>
-    <?php elseif ($user_type === 'librarian'): ?>
-        <!-- For Librarian logout -->
-        <a href="logout.php?type=librarian&id=<?php echo $librarian_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
-            <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-            <span class="font-Inter">Logout (Librarian)</span>
-        </a>
-    <?php elseif ($user_type === 'user'): ?>
-        <!-- For User logout -->
-        <a href="logout.php?type=user&id=<?php echo $user_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
-            <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-            <span class="font-Inter">Logout (User)</span>
-        </a>
-    <?php endif; ?>
+
+
+<!-- yaha pa bhi ham na session sa set kia ha ka logout ka time kis ka nam show karana ha jo jis time login ho ga ous ka nam hisab sa nam aay ga  -->
+
+
+
+                                            <?php if ($user_type === 'admin'): ?>
+                                                <!-- For Admin logout -->
+                                                <a href="logout.php?type=admin&id=<?php echo $admin_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
+                                                    <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                                                    <span class="font-Inter">Logout (Admin)</span>
+                                                </a>
+                                            <?php elseif ($user_type === 'librarian'): ?>
+                                                <!-- For Librarian logout -->
+                                                <a href="logout.php?type=librarian&id=<?php echo $librarian_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
+                                                    <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                                                    <span class="font-Inter">Logout (Librarian)</span>
+                                                </a>
+                                            <?php elseif ($user_type === 'user'): ?>
+                                                <!-- For User logout -->
+                                                <a href="logout.php?type=user&id=<?php echo $user_id; ?>" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
+                                                    <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                                                    <span class="font-Inter">Logout (User)</span>
+                                                </a>
+                                            <?php endif; ?>
                                                 </li>
                                             </ul>
                                         </div>

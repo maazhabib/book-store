@@ -1,4 +1,5 @@
 <?php
+// user data update reject
 include("config.php");
 
 session_start();

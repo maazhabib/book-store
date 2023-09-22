@@ -1,6 +1,8 @@
 <?php
 include "header.php";
 
+// user detail if user detail same as a librarian detail
+
 $db = new Database();
 
 $recordsPerPage = 5; 

@@ -1,25 +1,39 @@
 <?php
+// yaha pa ham na db ka nam sa veriable banaya ha or jo class ham na config ka page pa di thi ous sa
+//  call kia ha new Database ka nam sa 
 
 include "header.php";
-// include "config.php";
-// session_start();
 $db = new Database();
 
+// yaha pa ma na pagination ka recordsPerPage sa jo ma na per page banaya ha ka ak page pa mujy kitni 
+// book show ho gi ous la bd aglay page pa 12 books show ho gi 
+
 $recordsPerPage = 12;
+
+// yaha pa han ma current page get kia ha page ko
 
 $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $searchKeyword = '';
 $searchCondition = '';
 
+// yaha pa ham na search bar vala kam kia ha is ma ham na phaly data get kia or phr ya data show kara da ga 
+
 if (isset($_GET['search'])) {
     $searchKeyword = trim($_GET['data_enter']);
     $searchCondition = "name LIKE '%$searchKeyword%'";
 }
 
+// yaha  pa ham na pagination one page back vala kam kia ha is ma ham phalay current page ma sa -1 kia or multiply records page sa kr dia
 $offset = ($currentPage - 1) * $recordsPerPage;
 $limit = $recordsPerPage;
-$orderBy = 'ID ASC';
+// $orderBy = 'ID ASC';
+
+// yaha pa ham na search vala kam kia ha is ma agar searchCondition khali nai ha to is ma ya condition
+//  chal jay gi is ma ham na phalay book ka data fetch kia ha ous ka bd ham na condition lagai ha is ma
+//  phr is fetch accoc kia or phr is ma array ma total ko call kara lia 
+
+// COUNT(*) (to count all the total rows in the table.)
 
 if (!empty($searchCondition)) {
     $books = $db->select("books", "*", $searchCondition, "$offset, $limit");
@@ -30,6 +44,11 @@ if (!empty($searchCondition)) {
 }
 
 $totalPages = ceil($totalRecords / $recordsPerPage);
+
+// yaha pa ma na inner join vala work kia ha ma na is ma config ma jo function banaya tha vaha
+//  sa call ni kia ma na is ko direct query likh ka call kia ha user ka table ki id, book ka 
+// table ka user_id sa jorni thi to is lia ma na inner join us kia
+
 
 $sql = "SELECT user.* FROM user INNER JOIN books ON user.id = books.user_id";
 
@@ -109,6 +128,9 @@ $result = $db->executeQuery($sql);
                                 <div class="card-body flex flex-col p-6">
                                 <td class="table-td">
 
+<!-- yaha pa ham na user_type ko admin ya librarian ka brabar rakhi ha k agar user ya librian
+ login krta ha to ya button show ho ga agar user login karay ga to ousay ya button show ni ho ga -->
+ 
                                  <?php if ($user_type == 'admin' || $user_type == 'librarian') {?>
                                        <td class="table-td">
                                            <div class="dropstart relative">
