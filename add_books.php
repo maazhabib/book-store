@@ -145,26 +145,16 @@ include("header.php");
 <<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <script>
       
-      // yaha pa ma na ajax ke ka data upload_book.php pa bhaja ha or vaha sa add kara ka yaha pa get kia ha 
+// yaha pa ma na ajax ke ka data upload_book.php pa bhaja ha or vaha sa add kara ka yaha pa get kia ha 
 
-$(document).ready(function() {
-    $('#image').change(function() {
-        var input = this;   
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#image-preview').html('<img style="width: 100px;" src="' + e.target.result + '" alt="img">');
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    });
+// yaha pa ham na phaly jquery ka link lagaya ha ous ka bad ham na is ma $ ka sign use kia ha  
+
+
 
     $('#add-data').submit(function(e) {
         e.preventDefault();
 
         var formData = new FormData(this);
-
-        console.log(formData)
 
         $.ajax({
             url: 'upload_book.php', 
@@ -197,7 +187,7 @@ $(document).ready(function() {
 
         });
     });
-});
+
 </script>
 </body>
 

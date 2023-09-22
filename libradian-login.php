@@ -4,7 +4,7 @@ include("config.php");
 
 $database = new Database();
 
-// yaha pa agar server post ka brabar ho ga to yya agay bhr jay ga 
+// yaha pa agar server sa request mathod post ka brabar ho ga to yya agay bhr jay ga 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["uname"];

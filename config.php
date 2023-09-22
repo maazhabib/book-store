@@ -16,7 +16,7 @@ class Database
         }
     }
 
-    // yaha pa ham  na function banaya or is ma ham na return karaya ha data
+    // yaha pa ham  na function banaya grtmqsli isa call kena ka lia or is ma ham na return ma $this->mysqli->query karaya ha 
 
     public function getMysqli()
     {
@@ -110,6 +110,8 @@ class Database
 
 // yaha pa ham na destruct function banaya ha ya is lia banaya ha ka ham jb construct function banatay ha start krna
 //  ka lia to destruct function roaknay ka lia 
+
+// A destructor is called when the object is destructed or the script is stopped or exited
 
     public function __destruct()
     {

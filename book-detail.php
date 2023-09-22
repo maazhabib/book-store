@@ -54,11 +54,6 @@ $sql = "SELECT user.* FROM user INNER JOIN books ON user.id = books.user_id";
 
 $result = $db->executeQuery($sql);
 
-
-
-// print_r($result);
-// die;    
-
 ?>
 
 
@@ -85,11 +80,9 @@ $result = $db->executeQuery($sql);
 
                                     <li>
                                         <input name="data_enter" class="search_pat" type="text" placeholder="Enter Book Name"  >
-
                                         <button name="search" type="submit" class="search_btn">Search</button>
                                         <button name="reset" type="submit" class="search_btn">Table Reset</button>
                                     </li>
-
                                     <p style="color: red;">
                                         <?php echo @$error ?>
                                     </p>
@@ -130,7 +123,7 @@ $result = $db->executeQuery($sql);
 
 <!-- yaha pa ham na user_type ko admin ya librarian ka brabar rakhi ha k agar user ya librian
  login krta ha to ya button show ho ga agar user login karay ga to ousay ya button show ni ho ga -->
- 
+
                                  <?php if ($user_type == 'admin' || $user_type == 'librarian') {?>
                                        <td class="table-td">
                                            <div class="dropstart relative">

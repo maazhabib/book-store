@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
+    // bind_param    (to bind variables to a prepared statement as parameters in PHP mysqli object-oriented style)
+
     $sql = "SELECT id, password, status, user_type FROM user WHERE name = ? AND email = ?";
     $stmt = $database->getMysqli()->prepare($sql);
     $stmt->bind_param("ss", $username, $email);
